@@ -10,7 +10,7 @@ GAME FUNCTION:
 // Game values
 let min = 1,
   max = 10,
-  winningNum = 2,
+  winningNum = getRandomNum(min, max),
   guessesLeft = 3;
 
 // UI Elements
@@ -24,6 +24,23 @@ const gameUI = document.querySelector('#game'),
 // Assign UI min and max
 minNumUI.textContent = min;
 maxNumUI.textContent = max;
+
+
+// Play again event listener
+gameUI.addEventListener('mousedown', function(e){
+  if(e.target.className === 'play-again'){
+    window.location.reload();
+  }
+})
+    /* NB: using mouse down here, if we use click
+    as soon as we click submit the play again is already there,
+    and as we release the mouse it happens automatically.
+
+    By using mouse down we click, the class is added, the mouse
+    comes up and we see the win state. We then click again
+    to play again and that's our mouse down
+    */
+
 
 // Event listener guess
 guessBtn.addEventListener('click', function () {
@@ -83,6 +100,16 @@ function gameOver(won, msg){
 
   // Set message
   setMessage(msg);
+
+  // Play Again?
+  guessBtn.value = 'Play Again';
+  guessBtn.className += 'play-again';
+}
+
+
+// Get Winning Number
+function getRandomNum(min, max){
+  return Math.floor(Math.random()*(max-min+1)+min);
 }
 
 
